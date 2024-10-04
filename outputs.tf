@@ -21,7 +21,7 @@ output "networks" {
 
 output "tags" {
   description = "The tags to apply to all resources"
-  value       = local.tags
+  value       = module.tagging.tags
 }
 
 output "vpc_ids" {
