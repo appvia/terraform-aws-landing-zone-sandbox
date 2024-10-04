@@ -8,7 +8,6 @@ module "tagging" {
   git_repo    = var.git_repository
   owner       = var.owner
   product     = var.product
-  service     = var.service
 }
 
 ## Provision the landing zone via the base module 
@@ -27,7 +26,7 @@ module "landing_zone" {
   rbac                     = var.rbac
   region                   = var.region
   service_control_policies = var.service_control_policies
-  tags                     = module.tags.tags
+  tags                     = merge(var.tags, module.tagging.tags)
 
   providers = {
     aws.tenant     = aws.tenant
