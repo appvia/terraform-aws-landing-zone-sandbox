@@ -21,7 +21,7 @@ variable "dns" {
 variable "enable_caretaker" {
   description = "A flag indicating if the scheduled cleaner should be enabled"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "caretaker_log_retention_in_days" {
