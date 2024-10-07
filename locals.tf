@@ -21,11 +21,11 @@ locals {
 
       vpc = {
         availability_zones       = length(local.availability_zones)
+        cidr                     = "172.16.0.0/26"
         enable_private_endpoints = []
         enable_shared_endpoints  = false
         enable_transit_gateway   = false
         nat_gateway_mode         = "none"
-        netmask                  = 25
       }
     }
   }
