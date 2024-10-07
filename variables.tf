@@ -304,12 +304,6 @@ variable "region" {
   }
 }
 
-variable "git_repository" {
-  description = "The git repository to clone the terraform modules from"
-  type        = string
-  default     = null
-}
-
 variable "tags" {
   description = "A collection of tags to apply to resources"
   type        = map(string)

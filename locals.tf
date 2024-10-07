@@ -17,7 +17,6 @@ locals {
         enable_private_endpoints = false
         enable_shared_endpoints  = false
         enable_transit_gateway   = false
-        ipam_pool_name           = optional(string, null)
         nat_gateway_mode         = "none"
         netmask                  = 28
       }
@@ -25,5 +24,5 @@ locals {
   }
 
   ## The networks we should create within the sandbox account 
-  networks = merge(var.networks, local.caretaker_network)
+  networks = merge(var.networks, var.enable_caretaker ? local.caretaker_network : {})
 }
