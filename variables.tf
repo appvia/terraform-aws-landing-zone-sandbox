@@ -18,6 +18,30 @@ variable "dns" {
   }
 }
 
+variable "enable_caretaker" {
+  description = "A flag indicating if the scheduled cleaner should be enabled"
+  type        = bool
+  default     = true
+}
+
+variable "caretaker_log_retention_in_days" {
+  description = "The number of days to retain the logs for the caretaker"
+  type        = number
+  default     = 15
+}
+
+variable "caretaker_namespace" {
+  description = "The namespace to provision the caretaker in"
+  type        = string
+  default     = "default"
+}
+
+variable "caretaker_schedule_expression" {
+  description = "The schedule expression to run the caretaker"
+  type        = string
+  default     = "rate(48 hours)"
+}
+
 variable "service_control_policies" {
   description = "Provides the ability to associate one of more service control policies with an account"
   type = map(object({

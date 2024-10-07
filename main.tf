@@ -8,7 +8,7 @@ module "landing_zone" {
   dns                      = var.dns
   environment              = var.environment
   kms                      = var.kms
-  networks                 = var.networks
+  networks                 = local.networks
   notifications            = var.notifications
   owner                    = var.owner
   product                  = var.product
@@ -23,4 +23,23 @@ module "landing_zone" {
     aws.management = aws.management
     aws.network    = aws.network
   }
+}
+
+## Provision the nuke module to clean up the sandbox accounts 
+module "nuke_bomber" {
+  count = var.enable_caretaker ? 1 : 0
+
+  source  = "masterpointio/nuke-bomber/aws"
+  version = "0.2.0"
+
+  availability_zones    = local.availability_zones
+  log_retention_in_days = var.caretaker_log_retention_in_days
+  name                  = format("caretaker-%s", local.region)
+  namespace             = var.caretaker_namespace
+  region                = local.region
+  stage                 = var.environment
+  schedule_expression   = var.caretaker_schedule_expression
+  tags                  = var.tags
+  vpc_cidr_block        = var.vpc_cidr_block
+  # command = ["-c", "/home/aws-nuke/nuke-config.yml", "--force", "--force-sleep", "3", "--no-dry-run"]
 }

@@ -19,11 +19,6 @@ output "networks" {
   value       = module.landing_zone.networks
 }
 
-output "tags" {
-  description = "The tags to apply to all resources"
-  value       = module.tagging.tags
-}
-
 output "vpc_ids" {
   description = "A map of the network name to vpc id"
   value       = module.landing_zone.vpc_ids
