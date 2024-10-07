@@ -11,7 +11,7 @@ locals {
 
   ## This VPC CIDR block is used for the nuke module 
   caretaker_network = {
-    local.caretaker_vpc_name = {
+    local.caretaker_vpc_name : {
       vpc = {
         availability_zones       = length(local.availability_zones)
         enable_private_endpoints = false
