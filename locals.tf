@@ -26,6 +26,7 @@ locals {
         enable_shared_endpoints  = false
         enable_transit_gateway   = false
         nat_gateway_mode         = "none"
+        netmask                  = null
       }
     }
   }
