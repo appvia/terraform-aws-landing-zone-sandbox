@@ -1,21 +1,49 @@
 ![Github Actions](../../actions/workflows/terraform.yml/badge.svg)
 
-# Terraform <NAME>
+# Terraform Sandbox Landing Zones
 
 ## Description
 
-Add a description of the module here
+The purpose of this module to be provision a sandbox environment for developers to experiment with AWS resources. The module provisions a VPC, subnets, security groups, and other resources to allow developers to experiment with AWS resources in a safe and secure manner. We also provision a nuke service to automatically clean up resources from the accounts.
+
+The intention of the module is to provisioned once per account, per region.
 
 ## Usage
 
-Add example usage here
+You can find an example of how to use this module below
 
 ```hcl
-module "example" {
-  source  = "appvia/<NAME>/aws"
-  version = "0.0.1"
 
-  # insert variables here
+provider "aws" {
+  alias  = "test_sandbox"a
+  region = var.region
+
+  assume_role_with_web_identity {
+    role_arn                = "arn:aws:iam::${var.aws_accounts["ho-sandbox"]}:role/${local.managed_role_name}"
+    session_name            = var.provider_session_name
+    web_identity_token_file = var.provider_web_identity_token_file
+  }
+}
+
+module "test_sandbox" {
+  source = "github.com/appvia/terraform-aws-landing-zone-sandbox?ref=main"
+
+  environment = "Sandbox"
+  owner       = "Solutions"
+  product     = "Sandbox"
+  region      = var.region
+  tags        = var.tags
+
+  anomaly_detection = {
+    enable_default_monitors = true
+  }
+
+  providers = {
+    aws.tenant     = aws.test_sandbox
+    aws.identity   = aws.identity
+    aws.network    = aws.network
+    aws.management = aws.management
+  }
 }
 ```
 
