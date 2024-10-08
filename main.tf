@@ -28,6 +28,7 @@ module "landing_zone" {
 ## Provision the resources requried to run the scheduled nuke task within 
 ## the account region
 module "nuke_service" {
+  count  = local.nuke_enabled ? 1 : 0
   source = "github.com/appvia/terraform-aws-nuke?ref=main"
 
   ## Indicates if the KMS key should be created for the log group 
@@ -40,7 +41,7 @@ module "nuke_service" {
   ## This will create a task that runs every day at midnight
   schedule_expression = local.nuke_schedule_expression
   ## The ssubnet_ids to use for the nuke service 
-  subnet_ids = module.landing_zone.networks[local.nuke_vpc_name].public_subnets_ids
+  subnet_ids = module.landing_zone.networks[local.nuke_vpc_name].public_subnet_ids
   ## The tags for the resources created by this module 
   tags = local.operation_tags
 
