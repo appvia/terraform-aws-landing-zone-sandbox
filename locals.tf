@@ -22,6 +22,9 @@ locals {
         public = {
           netmask = 28
         }
+        private = {
+          netmask = 28
+        }
       }
 
       vpc = {
