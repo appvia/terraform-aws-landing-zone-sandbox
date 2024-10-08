@@ -31,6 +31,8 @@ module "nuke_service" {
   count  = local.nuke_enabled ? 1 : 0
   source = "github.com/appvia/terraform-aws-nuke?ref=main"
 
+  ## The account id we are provisioning in 
+  account_id = local.account_id
   ## Indicates we should assign a public IP to the nuke service 
   assign_public_ip = true
   ## Indicates if the KMS key should be created for the log group 
@@ -40,6 +42,8 @@ module "nuke_service" {
   ## This is the location of the aws-nuke configuration file, this is 
   ## copied into the container via a parameter store value
   nuke_configuration = "${path.module}/assets/nuke/config.yml"
+  ## The region we are provisioning in 
+  region = local.region
   ## This will create a task that runs every day at midnight
   schedule_expression = local.nuke_schedule_expression
   ## The ssubnet_ids to use for the nuke service 

@@ -1,6 +1,8 @@
 
 locals {
-  ## The current region for the current account 
+  ## The account id of the tenant account 
+  account_id = data.aws_caller_identity.current.account_id
+  ## The current region for the tenant account
   region = data.aws_region.current.name
 
   ## The tags used for support related resources
@@ -41,5 +43,5 @@ locals {
   nuke_schedule_expression = "cron(30 10 ? * 2 *)"
 
   ## The networks we should create within the sandbox account 
-  networks = merge(var.networks, local.nuke_enabled ? local.nuke_network : {})
+  networks = merge(var.networks, local.nuke_enabled == true ? local.nuke_network : {})
 }
