@@ -41,7 +41,7 @@ module "nuke_service" {
   ## This will create a task that runs every day at midnight
   schedule_expression = local.nuke_schedule_expression
   ## The ssubnet_ids to use for the nuke service 
-  subnet_ids = module.landing_zone.networks[local.nuke_vpc_name].public_subnets_ids
+  subnet_ids = module.landing_zone.networks[local.nuke_vpc_name].public_subnet_ids
   ## The tags for the resources created by this module 
   tags = local.operation_tags
 
