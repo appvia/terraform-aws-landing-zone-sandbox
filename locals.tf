@@ -18,20 +18,24 @@ locals {
   ## This VPC CIDR block is used for the nuke module 
   nuke_network = {
     (local.nuke_vpc_name) : {
+      subnets = {
+        public = {
+          netmask = 28
+        }
+      }
+
       vpc = {
         availability_zones     = 2
         cidr                   = "172.16.0.0/25"
         enable_ipam            = false
         enable_transit_gateway = false
         nat_gateway_mode       = "none"
-        public_subnet_netmask  = 28
         tags                   = local.operation_tags
-        transit_gateway_id     = null
       }
     }
   }
-  ## The cron expression for the nuke task 
-  nuke_schedule_expression = "cron(0 0 * * ? *)"
+  ## The cron expression for the nuke task - 10:30 every Monday
+  nuke_schedule_expression = "cron(30 10 * * 1)"
 
   ## The networks we should create within the sandbox account 
   networks = merge(var.networks, local.nuke_enabled ? local.nuke_network : {})
