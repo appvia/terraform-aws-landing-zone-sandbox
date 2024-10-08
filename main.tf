@@ -24,3 +24,31 @@ module "landing_zone" {
     aws.network    = aws.network
   }
 }
+
+## Provision the resources requried to run the scheduled nuke task within 
+## the account region
+module "nuke_service" {
+  source = "github.com/appvia/terraform-aws-nuke?ref=main"
+
+  ## Indicates if the KMS key should be created for the log group 
+  create_kms_key = false
+  ## Indicates if we should skips deletion (default is false)
+  enable_deletion = false
+  ## This is the location of the aws-nuke configuration file, this is 
+  ## copied into the container via a parameter store value
+  nuke_configuration = "${path.module}/assets/nuke/config.yml"
+  ## This will create a task that runs every day at midnight
+  schedule_expression = local.nuke_schedule_expression
+  ## The ssubnet_ids to use for the nuke service 
+  subnet_ids = module.landing_zone.networks[local.nuke_vpc_name].public_subnets_ids
+  ## The tags for the resources created by this module 
+  tags = local.operation_tags
+
+  providers = {
+    aws = aws.tenant
+  }
+
+  depends_on = [
+    module.landing_zone,
+  ]
+}

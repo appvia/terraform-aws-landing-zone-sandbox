@@ -3,34 +3,36 @@ locals {
   ## The current region for the current account 
   region = data.aws_region.current.name
 
-  ## We only need to run the ecs cluster in two availability zones 
-  availability_zones = slice(data.aws_availability_zones.current.names, 0, 2)
+  ## The tags used for support related resources
+  operation_tags = {
+    "Environment" = "Production"
+    "GitRepo"     = var.git_repository
+    "Owner"       = "Support"
+    "Product"     = "LandingZone"
+  }
 
+  ## Indicates if the nuke module should be enabled 
+  nuke_enabled = true
   ## Is the name of the vpc we use to run the caretaker task within 
-  caretaker_vpc_name = format("caretaker-%s", local.region)
-
+  nuke_vpc_name = format("nuke-%s", local.region)
   ## This VPC CIDR block is used for the nuke module 
-  caretaker_network = {
-    (local.caretaker_vpc_name) : {
-      subnets = {
-        private = {
-          availability_zones = local.availability_zones
-          netmask            = 28
-        }
-      }
-
+  nuke_network = {
+    (local.nuke_vpc_name) : {
       vpc = {
-        availability_zones       = length(local.availability_zones)
-        cidr                     = "172.16.0.0/26"
-        enable_private_endpoints = []
-        enable_shared_endpoints  = false
-        enable_transit_gateway   = false
-        nat_gateway_mode         = "none"
-        netmask                  = null
+        availability_zones     = 2
+        cidr                   = "172.16.0.0/25"
+        enable_ipam            = false
+        enable_transit_gateway = false
+        nat_gateway_mode       = "none"
+        public_subnet_netmask  = 28
+        tags                   = local.operation_tags
+        transit_gateway_id     = null
       }
     }
   }
+  ## The cron expression for the nuke task 
+  nuke_schedule_expression = "cron(0 0 * * ? *)"
 
   ## The networks we should create within the sandbox account 
-  networks = merge(var.networks, var.enable_caretaker ? local.caretaker_network : {})
+  networks = merge(var.networks, local.nuke_enabled ? local.nuke_network : {})
 }
