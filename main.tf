@@ -31,6 +31,8 @@ module "nuke_service" {
   count  = local.nuke_enabled ? 1 : 0
   source = "github.com/appvia/terraform-aws-nuke?ref=main"
 
+  ## Indicates we should assign a public IP to the nuke service 
+  assign_public_ip = true
   ## Indicates if the KMS key should be created for the log group 
   create_kms_key = false
   ## Indicates if we should skips deletion (default is false)
