@@ -41,5 +41,5 @@ locals {
   nuke_schedule_expression = "cron(30 10 * * 1)"
 
   ## The networks we should create within the sandbox account 
-  networks = merge(var.networks, local.nuke_network)
+  networks = merge(var.networks, local.nuke_enabled ? local.nuke_network : {})
 }
