@@ -28,6 +28,7 @@ module "landing_zone" {
 ## Provision the resources requried to run the scheduled nuke task within 
 ## the account region
 module "nuke_service" {
+  count  = local.nuke_enabled ? 1 : 0
   source = "github.com/appvia/terraform-aws-nuke?ref=main"
 
   ## Indicates if the KMS key should be created for the log group 
