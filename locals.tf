@@ -39,8 +39,8 @@ locals {
       }
     }
   }
-  ## The cron expression for the nuke task - 10:30 every Monday
-  nuke_schedule_expression = "cron(30 10 ? * 2 *)"
+  ## The cron expression for the nuke task - 10:30 every Monday, Wednesday, and Friday
+  nuke_schedule_expression = "cron(30 10 ? * MON,WED,FRI *)"
 
   ## The networks we should create within the sandbox account 
   networks = merge(var.networks, local.nuke_enabled == true ? local.nuke_network : {})
