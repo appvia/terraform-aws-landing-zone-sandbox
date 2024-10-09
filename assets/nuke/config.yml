@@ -6,6 +6,9 @@ regions:
   - global
   - ${region}
 
+bypass-alias-check-accounts:
+  - ${account_id}
+
 resource-types:
   includes:
     - AWSBackupRecoveryPoint
@@ -272,9 +275,9 @@ resource-types:
     - EC2DHCPOption
     - EC2NetworkACL
     - EC2NetworkInterface
-    - ECSCluster  # Doesn't appear to support tags 
-    - ECSClusterInstance # Doesn't appear to support tags 
-    - ECSService # Doesn't appear to support tags 
+    - ECSCluster # Doesn't appear to support tags
+    - ECSClusterInstance # Doesn't appear to support tags
+    - ECSService # Doesn't appear to support tags
     - ECSTaskDefinition # Doesn't appear to support tags
     - FMSNotificationChannel
     - FMSPolicy
