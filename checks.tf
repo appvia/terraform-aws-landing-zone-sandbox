@@ -5,6 +5,6 @@ check "sso_permitted_permission_sets" {
     condition = alltrue([
       for k in keys(var.rbac) : contains(keys(local.sso_permitted_permission_sets), k)
     ])
-    error_message = "The following roles are not defined within the permitted roles: ${join(", ", var.rbac)}"
+    error_message = "The following roles are not defined within the permitted roles"
   }
 }
