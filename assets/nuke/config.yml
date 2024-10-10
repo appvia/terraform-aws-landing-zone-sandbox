@@ -60,7 +60,6 @@ resource-types:
     - DatabaseMigrationServiceSubnetGroup
     - DeviceFarmProject
     - DirectoryServiceDirectory
-    - DynamoDBTable
     - EC2Address
     - EC2ClientVpnEndpoint
     - EC2ClientVpnEndpointAttachment
@@ -202,7 +201,6 @@ resource-types:
     - RoboMakerSimulationJob
     - Route53HostedZone
     - Route53ResourceRecordSet
-    - S3Bucket
     - S3MultipartUpload
     - S3Object
     - SESConfigurationSet
@@ -272,6 +270,7 @@ resource-types:
     - CodeStarConnection
     - CodeStarNotification
     - CodeStarProject
+    - DynamoDBTable
     - EC2DHCPOption
     - EC2NetworkACL
     - EC2NetworkInterface
@@ -302,6 +301,7 @@ resource-types:
     - RoboMakerRobotApplication
     - RoboMakerSimulationApplication
     - RoboMakerSimulationJob
+    - S3Bucket
     - S3Object
     - ServiceCatalogTagOption
     - ServiceCatalogTagOptionPortfolioAttachment
