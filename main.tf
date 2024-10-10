@@ -12,7 +12,7 @@ module "landing_zone" {
   notifications            = var.notifications
   owner                    = var.owner
   product                  = var.product
-  rbac                     = var.rbac
+  rbac                     = local.rbac
   region                   = var.region
   service_control_policies = var.service_control_policies
   tags                     = var.tags
