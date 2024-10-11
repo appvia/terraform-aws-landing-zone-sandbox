@@ -843,7 +843,11 @@ accounts:
       EC2InternetGatewayAttachment:
         - property: tag:Owner
           value: Support
+        - property: tag:igw:Owner
+          value: Support
         - property: tag:Owner
+          value: Solutions
+        - property: tag:igw:Owner
           value: Solutions
         - property: tag:aws-nuke
           value: ignore
