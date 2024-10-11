@@ -105,7 +105,6 @@ The `terraform-docs` utility is used to generate this README. Follow the below s
 | Name | Description |
 |------|-------------|
 | <a name="output_account_id"></a> [account\_id](#output\_account\_id) | The account id where the pipeline is running |
-| <a name="output_environment"></a> [environment](#output\_environment) | The environment name for the tenant |
 | <a name="output_networks"></a> [networks](#output\_networks) | A map of the network name to network details |
 | <a name="output_private_hosted_zones_by_id"></a> [private\_hosted\_zones\_by\_id](#output\_private\_hosted\_zones\_by\_id) | A map of the hosted zone name to id |
 | <a name="output_vpc_ids"></a> [vpc\_ids](#output\_vpc\_ids) | A map of the network name to vpc id |

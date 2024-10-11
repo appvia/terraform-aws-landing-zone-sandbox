@@ -4,11 +4,6 @@ output "account_id" {
   value       = data.aws_caller_identity.current.account_id
 }
 
-output "environment" {
-  description = "The environment name for the tenant"
-  value       = var.environment
-}
-
 output "private_hosted_zones_by_id" {
   description = "A map of the hosted zone name to id"
   value       = module.landing_zone.private_hosted_zones_by_id
