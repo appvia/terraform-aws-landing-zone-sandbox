@@ -41,17 +41,6 @@ variable "service_control_policies" {
   }
 }
 
-variable "environment" {
-  description = "The environment in which to provision resources"
-  type        = string
-
-  ## The environment must be one of the following 
-  validation {
-    condition     = var.environment == "Production" || var.environment == "Staging" || var.environment == "Development" || var.environment == "Sandbox"
-    error_message = "The environment must be one of Production, Staging, Development or Sandbox"
-  }
-}
-
 variable "kms" {
   description = "Configuration for the KMS key to use for encryption"
   type = object({
@@ -131,26 +120,6 @@ variable "anomaly_detection" {
     })), [])
   })
   default = {}
-}
-
-variable "product" {
-  description = "The name of the product to provision resources and inject into all resource tags"
-  type        = string
-
-  validation {
-    condition     = length(var.product) > 0
-    error_message = "The product name must be greater than 0"
-  }
-
-  validation {
-    condition     = length(var.product) <= 16
-    error_message = "The product name must be less than or equal to 16"
-  }
-
-  validation {
-    condition     = can(regex("^[a-zA-Z0-9-_]+$", var.product))
-    error_message = "The product name must be alphanumeric and contain only hyphens and underscores"
-  }
 }
 
 variable "owner" {

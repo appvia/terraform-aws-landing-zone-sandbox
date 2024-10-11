@@ -6,12 +6,12 @@ module "landing_zone" {
   anomaly_detection        = var.anomaly_detection
   cost_center              = var.cost_center
   dns                      = var.dns
-  environment              = var.environment
+  environment              = "Sandbox"
   kms                      = var.kms
   networks                 = local.networks
   notifications            = var.notifications
   owner                    = var.owner
-  product                  = var.product
+  product                  = "Sandbox"
   rbac                     = local.rbac
   region                   = var.region
   service_control_policies = var.service_control_policies
