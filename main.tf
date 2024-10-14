@@ -28,7 +28,6 @@ module "landing_zone" {
 ## Provision the resources requried to run the scheduled nuke task within 
 ## the account region
 module "nuke_service" {
-  count  = local.nuke_enabled ? 1 : 0
   source = "github.com/appvia/terraform-aws-nuke?ref=main"
 
   ## The account id we are provisioning in 
@@ -38,7 +37,7 @@ module "nuke_service" {
   ## Indicates if the KMS key should be created for the log group 
   create_kms_key = false
   ## Indicates if we should skips deletion (default is false)
-  enable_deletion = false
+  enable_deletion = var.enable_nuke
   ## This is the location of the aws-nuke configuration file, this is 
   ## copied into the container via a parameter store value
   nuke_configuration = "${path.module}/assets/nuke/config.yml"
