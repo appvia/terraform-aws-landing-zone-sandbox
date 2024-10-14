@@ -31,7 +31,7 @@ locals {
   }
 
   ## Indicates if the nuke module should be enabled 
-  nuke_enabled = true
+  nuke_enabled = var.enable_nuke
   ## Is the name of the vpc we use to run the caretaker task within 
   nuke_vpc_name = format("nuke-%s", local.region)
   ## This VPC CIDR block is used for the nuke module 

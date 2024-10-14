@@ -18,6 +18,12 @@ variable "dns" {
   }
 }
 
+variable "enable_nuke" {
+  description = "Indicates we should enable the automatic cleanup so resources"
+  type        = bool
+  default     = true
+}
+
 variable "service_control_policies" {
   description = "Provides the ability to associate one of more service control policies with an account"
   type = map(object({
