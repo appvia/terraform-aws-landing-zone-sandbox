@@ -56,8 +56,38 @@ locals {
       }
     }
   }
-  ## The cron expression for the nuke task - 10:30 every Monday, Wednesday, and Friday
-  nuke_schedule_expression = "cron(30 10 ? * MON,WED,FRI *)"
+
+  nuke_tasks = merge({
+    "dry-run" = {
+      ## The path to the configuration file for the task
+      configuration_file = "${path.module}/assets/nuke/config.yml"
+      ## A description for the task 
+      description = "Runs a dry run to validate what would be deleted"
+      ## The log retention in days for the task 
+      retention_in_days = 5
+      ## The schedule expression for the task - every monday at 09:00
+      schedule = "cron(0 9 ? * MON *)"
+      ## The IAM permissions to attach to the task role 
+      permission_arns = [
+        "arn:aws:iam::aws:policy/ReadOnlyAccess"
+      ]
+    },
+    }, var.enable_nuke == false ? {} : {
+    "default" = {
+      ## The path to the configuration file for the task
+      configuration_file = "${path.module}/assets/nuke/config.yml"
+      ## A description for the task 
+      description = "Runs the actual nuke service, deleting resources"
+      ## The log retention in days for the task 
+      retention_in_days = 14
+      ## The schedule expression for the task, every friday at 10:00
+      schedule = "cron(0 10 ? * FRI *)"
+      ## The IAM permissions to attach to the task role 
+      permission_arns = [
+        "arn:aws:iam::aws:policy/AdministratorAccess"
+      ]
+    }
+  })
 
   ## The networks we should create within the sandbox account 
   networks = merge(var.networks, local.nuke_enabled == true ? local.nuke_network : {})
