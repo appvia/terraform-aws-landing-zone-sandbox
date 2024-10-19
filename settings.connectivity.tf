@@ -52,5 +52,4 @@ locals {
       gateway_routes = local.transit_gateway_default_routes
     }
   }) }
-
 }
