@@ -26,9 +26,9 @@ module "landing_zone" {
   ## Ensure all accounts have a default KMS key adminstrator, assumable 
   ## by the audit account
   kms_administrator = {
-    assumed_accounts = [local.audit_account_id]
-    enable           = true
-    name             = "lza-kms-administrator"
+    assume_accounts = [local.audit_account_id]
+    enable          = true
+    name            = "lza-kms-administrator"
   }
 
   ## Ensure all accounts have a default kms key for encryption 
