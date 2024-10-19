@@ -33,7 +33,7 @@ module "landing_zone" {
 
   ## Ensure all accounts have a default kms key for encryption 
   kms_key = {
-    enabled   = true
+    enabled   = false
     key_alias = "lza/account/default"
   }
 
