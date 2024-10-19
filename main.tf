@@ -9,7 +9,7 @@ module "landing_zone" {
   home_region                     = local.home_region
   identity_center_permitted_roles = local.sso_permitted_permissionsets
   networks                        = local.networks
-  notifications                   = var.notifications
+  notifications                   = local.notifications
   owner                           = var.owner
   product                         = "Sandbox"
   rbac                            = local.rbac
