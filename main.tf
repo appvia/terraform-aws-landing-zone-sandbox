@@ -19,21 +19,21 @@ module "landing_zone" {
 
   ## Ensure all accounts have cost anomaly detection enabled 
   cost_anomaly_detection = {
-    enabled  = true
+    enable   = true
     monitors = local.cost_anomaly_default_monitors
   }
 
   ## Ensure all accounts have a default KMS key adminstrator, assumable 
   ## by the audit account
   kms_administrator = {
-    name             = "lza-kms-administrator"
     assumed_accounts = [local.audit_account_id]
-    enabled          = true
+    enable           = true
+    name             = "lza-kms-administrator"
   }
 
   ## Ensure all accounts have a default kms key for encryption 
   kms_key = {
-    enabled   = false
+    enable    = false
     key_alias = "lza/account/default"
   }
 
