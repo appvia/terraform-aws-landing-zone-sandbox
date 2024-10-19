@@ -3,19 +3,39 @@
 module "landing_zone" {
   source = "github.com/appvia/terraform-aws-landing-zones?ref=main"
 
-  anomaly_detection        = var.anomaly_detection
-  cost_center              = var.cost_center
-  dns                      = var.dns
-  environment              = "Sandbox"
-  kms                      = var.kms
-  networks                 = local.networks
-  notifications            = var.notifications
-  owner                    = var.owner
-  product                  = "Sandbox"
-  rbac                     = local.rbac
-  region                   = var.region
-  service_control_policies = var.service_control_policies
-  tags                     = var.tags
+  cost_center                     = var.cost_center
+  dns                             = var.dns
+  environment                     = "Sandbox"
+  home_region                     = local.home_region
+  identity_center_permitted_roles = local.sso_permitted_permissionsets
+  networks                        = local.networks
+  notifications                   = var.notifications
+  owner                           = var.owner
+  product                         = "Sandbox"
+  rbac                            = local.rbac
+  region                          = var.region
+  service_control_policies        = var.service_control_policies
+  tags                            = local.tags
+
+  ## Ensure all accounts have cost anomaly detection enabled 
+  cost_anomaly_detection = {
+    enabled  = true
+    monitors = local.cost_anomaly_default_monitors
+  }
+
+  ## Ensure all accounts have a default KMS key adminstrator, assumable 
+  ## by the audit account
+  kms_administrator = {
+    name             = "lza-kms-administrator"
+    assumed_accounts = [local.audit_account_id]
+    enabled          = true
+  }
+
+  ## Ensure all accounts have a default kms key for encryption 
+  kms_key = {
+    enabled   = true
+    key_alias = "lza/account/default"
+  }
 
   providers = {
     aws.tenant     = aws.tenant

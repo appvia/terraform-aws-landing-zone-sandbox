@@ -47,18 +47,6 @@ variable "service_control_policies" {
   }
 }
 
-variable "kms" {
-  description = "Configuration for the KMS key to use for encryption"
-  type = object({
-    enable_default_kms = optional(bool, true)
-    # A flag indicating if the default KMS key should be enabled 
-    key_alias = optional(string, "landing-zone/default")
-  })
-  default = {
-    enable_default_kms = true
-  }
-}
-
 variable "rbac" {
   description = "Provides the ability to associate one of more groups with a sso role in the account"
   type = map(object({
@@ -95,39 +83,6 @@ variable "notifications" {
     }
   }
 }
-
-variable "anomaly_detection" {
-  description = "A collection of anomaly detection rules to apply to the environment"
-  type = object({
-    enable_default_monitors = optional(bool, true)
-    # A flag indicating if the default monitors should be enabled 
-    monitors = optional(list(object({
-      name = string
-      # The name of the anomaly detection rule 
-      dimension = optional(string, "DIMENSIONAL")
-      # The dimension of the anomaly detection rule, either SERVICE or DIMENSIONAL
-      threshold_expression = optional(any, [
-        {
-          and = {
-            dimension = {
-              key           = "ANOMALY_TOTAL_IMPACT_PERCENTAGE"
-              match_options = ["GREATER_THAN_OR_EQUAL"]
-              values        = ["50"]
-            }
-          }
-      }])
-      # The expression to apply to the anomaly detection rule
-      # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ce_anomaly_monitor
-      specification = optional(string, "")
-      # The specification to anomaly detection monitor 
-      # see https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ce_anomaly_monitor
-      frequency = optional(string, "DAILY")
-      # The frequency of you want to receive notifications 
-    })), [])
-  })
-  default = {}
-}
-
 variable "owner" {
   description = "The owner of the product, and injected into all resource tags"
   type        = string

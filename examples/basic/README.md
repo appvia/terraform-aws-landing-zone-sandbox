@@ -12,7 +12,9 @@ No providers.
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_sandbox"></a> [sandbox](#module\_sandbox) | ../../ | n/a |
 
 ## Resources
 
